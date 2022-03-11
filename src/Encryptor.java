@@ -38,13 +38,22 @@ public class Encryptor
       for(int col = 0; col < letterBlock[0].length; col++)
       {
         System.out.println(count);
-        letterBlock[row][col] = str.substring(count);
-        System.out.println(letterBlock[row][col] + ", ");
+        if(count < str.length())
+        {
+          letterBlock[row][col] = str.substring(count, count + 1);
+//          System.out.print(letterBlock[row][col]);
+        }
+        else if(count >= str.length())
+        {
+          letterBlock[row][col] = "A";
+        }
+
         count++;
       }
+      System.out.println();
     }
-    System.out.println("length " + str.length());
-    System.out.println("length2 " + numRows * numCols);
+//    System.out.println("length " + str.length());
+//    System.out.println("length2 " + numRows * numCols);
   }
 
   /** Extracts encrypted string from letterBlock in column-major order.
@@ -53,10 +62,18 @@ public class Encryptor
    *
    *   @return the encrypted string from letterBlock
    */
-//  public String encryptBlock()
-//  {
-//    /* to be implemented in part (b) */
-//  }
+  public String encryptBlock()
+  {
+    String whatever = "";
+    for(int col = 0; col < letterBlock[0].length; col++)
+    {
+      for(int row = 0; row < letterBlock.length; row++)
+      {
+        whatever += letterBlock[row][col] ;
+      }
+    }
+    return whatever;
+  }
 
   /** Encrypts a message.
    *
@@ -64,10 +81,18 @@ public class Encryptor
    *
    *  @return the encrypted message; if message is the empty string, returns the empty string
    */
-//  public String encryptMessage(String message)
-//  {
-//    /* to be implemented in part (c) */
-//  }
+  public String encryptMessage(String message)
+  {
+    String wtvr = "";
+    int times = 0;
+    while(times < message.length())
+    {
+      fillBlock(message.substring(times, message.length()));
+      wtvr += encryptBlock();
+      times += numCols * numRows;
+    }
+      return wtvr;
+  }
 
   /**  Decrypts an encrypted message. All filler 'A's that may have been
    *   added during encryption will be removed, so this assumes that the
@@ -91,8 +116,10 @@ public class Encryptor
    *        (e.g. a method to decrypt each section of the decrypted message,
    *         similar to how encryptBlock was used)
    */
-//  public String decryptMessage(String encryptedMessage)
-//  {
-//    /** to be implemented in part (d) */
-//  }
+  public String decryptMessage(String encryptedMessage)
+  {
+    String whatever = "";
+    int times = numCols * numRows;
+
+  }
 }
